@@ -1,6 +1,7 @@
 -- Admin platform upgrade:
 -- contests management, multi-target contests, richer exercises metadata,
 -- and guaranteed owner admin + Elite premium subscription.
+-- IMPORTANTE SUBSTITUIR "SEU-EMAIL-ADMIN" PELO EMAIL QUE VOCE IRA USAR COMO ADMIN
 
 create extension if not exists pgcrypto;
 

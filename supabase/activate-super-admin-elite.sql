@@ -4,7 +4,7 @@
 with target_user as (
   select id
   from public.profiles
-  where lower(email) = lower('marcosapps2020@gmail.com')
+  where lower(email) = lower('SEU-EMAIL-ADMIN')
   limit 1
 ),
 updated as (

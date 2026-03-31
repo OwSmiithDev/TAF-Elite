@@ -1,5 +1,6 @@
 -- Activates the Elite premium plan indefinitely for the super admin.
 -- Run this in the Supabase SQL Editor.
+-- IMPORTANTE SUBSTITUIR "SEU-EMAIL-ADMIN" PELO EMAIL QUE VOCE IRA USAR COMO ADMIN
 
 with target_user as (
   select id

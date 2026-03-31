@@ -1,35 +1,41 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, Users, Dumbbell, Calendar, Image as ImageIcon, ChevronRight, ArrowLeft } from 'lucide-react';
+import { Users, Dumbbell, ShieldCheck, ChevronRight, ArrowLeft, Crown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export function AdminDashboard() {
   const navigate = useNavigate();
-  
+
   const adminModules = [
-    { id: 'exercises', title: 'Exercícios', icon: Dumbbell, description: 'Gerenciar biblioteca de exercícios' },
-    { id: 'plans', title: 'Planos de Treino', icon: Calendar, description: 'Criar e editar planos de treinamento' },
-    { id: 'users', title: 'Usuários', icon: Users, description: 'Visualizar e gerenciar usuários' },
-    { id: 'media', title: 'Mídia', icon: ImageIcon, description: 'Gerenciar imagens e vídeos' },
-    { id: 'settings', title: 'Configurações', icon: Settings, description: 'Configurações gerais do app' },
+    { id: 'exercises', title: 'Treinos', icon: Dumbbell, description: 'Adicionar, editar e excluir treinos completos' },
+    { id: 'contests', title: 'Concursos', icon: ShieldCheck, description: 'Cadastrar os concursos usados em toda a aplicacao' },
+    { id: 'users', title: 'Usuarios e Assinaturas', icon: Users, description: 'Gerir usuarios, planos e reset de senha' },
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-950 text-zinc-50 overflow-hidden max-w-md mx-auto relative shadow-2xl">
-      <div className="pt-12 pb-6 px-6 bg-zinc-900 border-b border-zinc-800 flex items-center">
-        <button 
-          onClick={() => navigate('/profile')}
-          className="p-2 -ml-2 mr-2 text-zinc-400 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="w-6 h-6" />
+    <div className="relative mx-auto flex h-screen max-w-md flex-col overflow-hidden bg-zinc-950 text-zinc-50 shadow-2xl">
+      <div className="flex items-center border-b border-zinc-800 bg-zinc-900 px-6 pb-6 pt-12">
+        <button onClick={() => navigate('/profile')} className="mr-2 p-2 -ml-2 text-zinc-400 transition-colors hover:text-white">
+          <ArrowLeft className="h-6 w-6" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold font-sans tracking-tight">Painel Admin</h1>
-          <p className="text-sm text-emerald-500 font-mono mt-1">Super Admin Access</p>
+          <h1 className="text-2xl font-bold tracking-tight">Painel Admin</h1>
+          <p className="mt-1 font-mono text-sm text-emerald-500">Super Admin Access</p>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-6">
+        <div className="mb-6 rounded-2xl border border-amber-500/20 bg-amber-500/10 p-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10">
+              <Crown className="h-5 w-5 text-amber-400" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-white">Dono da plataforma</h2>
+              <p className="text-xs text-amber-100/80">Super admin sempre com TAF Elite Premium ativo e sem expiracao.</p>
+            </div>
+          </div>
+        </div>
+
         <div className="grid gap-4">
           {adminModules.map((module, index) => {
             const Icon = module.icon;
@@ -40,16 +46,16 @@ export function AdminDashboard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => navigate(`/admin/${module.id}`)}
-                className="flex items-center p-4 bg-zinc-900 border border-zinc-800 rounded-2xl hover:border-emerald-500/50 transition-colors text-left group"
+                className="group flex items-center rounded-2xl border border-zinc-800 bg-zinc-900 p-4 text-left transition-colors hover:border-emerald-500/50"
               >
-                <div className="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mr-4 group-hover:bg-emerald-500/20 transition-colors">
-                  <Icon className="w-6 h-6 text-emerald-500" />
+                <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-800 transition-colors group-hover:bg-emerald-500/20">
+                  <Icon className="h-6 w-6 text-emerald-500" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold text-lg">{module.title}</h3>
+                  <h3 className="text-lg font-semibold">{module.title}</h3>
                   <p className="text-sm text-zinc-400">{module.description}</p>
                 </div>
-                <ChevronRight className="w-5 h-5 text-zinc-600 group-hover:text-emerald-500 transition-colors" />
+                <ChevronRight className="h-5 w-5 text-zinc-600 transition-colors group-hover:text-emerald-500" />
               </motion.button>
             );
           })}

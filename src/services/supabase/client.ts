@@ -9,10 +9,8 @@ export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey && su
 
 export const supabase = isSupabaseConfigured
   ? createClient<any>(supabaseUrl, supabaseAnonKey)
-  : ({} as any); // Mock client
+  : ({} as any);
 
 if (!isSupabaseConfigured) {
-  console.warn(
-    'Supabase is not configured. The app is running in UI-only mode.'
-  );
+  console.warn('Supabase is not configured.');
 }

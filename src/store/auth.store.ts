@@ -4,7 +4,7 @@ import type { Database } from '@/types/database';
 type Profile = Database['public']['Tables']['profiles']['Row'];
 
 interface AuthState {
-  session: any | null; // Using any for simplicity in mock mode
+  session: any | null;
   user: any | null;
   profile: Profile | null;
   isLoading: boolean;

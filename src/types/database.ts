@@ -68,6 +68,52 @@ export interface Database {
           updated_at?: string
         }
       }
+      contests: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          description: string | null
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          slug: string
+          description?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          slug?: string
+          description?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      profile_target_exams: {
+        Row: {
+          profile_id: string
+          contest_id: string
+          created_at: string
+        }
+        Insert: {
+          profile_id: string
+          contest_id: string
+          created_at?: string
+        }
+        Update: {
+          profile_id?: string
+          contest_id?: string
+          created_at?: string
+        }
+      }
       onboarding_answers: {
         Row: {
           id: string
@@ -123,6 +169,11 @@ export interface Database {
           safety_notes: string | null
           video_url: string | null
           thumbnail_url: string | null
+          sets_count: number | null
+          reps_text: string | null
+          rest_seconds: number | null
+          estimated_duration_minutes: number | null
+          equipment: string | null
           is_premium: boolean
           is_active: boolean
           created_at: string
@@ -141,6 +192,11 @@ export interface Database {
           safety_notes?: string | null
           video_url?: string | null
           thumbnail_url?: string | null
+          sets_count?: number | null
+          reps_text?: string | null
+          rest_seconds?: number | null
+          estimated_duration_minutes?: number | null
+          equipment?: string | null
           is_premium?: boolean
           is_active?: boolean
           created_at?: string
@@ -159,10 +215,32 @@ export interface Database {
           safety_notes?: string | null
           video_url?: string | null
           thumbnail_url?: string | null
+          sets_count?: number | null
+          reps_text?: string | null
+          rest_seconds?: number | null
+          estimated_duration_minutes?: number | null
+          equipment?: string | null
           is_premium?: boolean
           is_active?: boolean
           created_at?: string
           updated_at?: string
+        }
+      }
+      exercise_contests: {
+        Row: {
+          exercise_id: string
+          contest_id: string
+          created_at: string
+        }
+        Insert: {
+          exercise_id: string
+          contest_id: string
+          created_at?: string
+        }
+        Update: {
+          exercise_id?: string
+          contest_id?: string
+          created_at?: string
         }
       }
       training_plans: {

@@ -3,7 +3,6 @@ import { useAuthStore } from '@/store/auth.store';
 import { useEffect } from 'react';
 import { isSupabaseConfigured, supabase } from '@/services/supabase/client';
 
-// Screens
 import { SplashScreen } from '@/screens/SplashScreen';
 import { WelcomeScreen } from '@/screens/auth/WelcomeScreen';
 import { LoginScreen } from '@/screens/auth/LoginScreen';
@@ -12,27 +11,23 @@ import { OnboardingScreen } from '@/screens/onboarding/OnboardingScreen';
 import { MainTabs } from '@/navigation/MainTabs';
 import { AdminDashboard } from '@/screens/admin/AdminDashboard';
 import { AdminExercisesScreen } from '@/screens/admin/AdminExercisesScreen';
+import { AdminContestsScreen } from '@/screens/admin/AdminContestsScreen';
+import { AdminUsersScreen } from '@/screens/admin/AdminUsersScreen';
 
 export function AppNavigator() {
-  const { session, isLoading, setSession, setLoading } = useAuthStore();
+  const { session, profile, isLoading, setSession, setLoading } = useAuthStore();
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
-      // Mock auth flow for UI preview
-      setTimeout(() => {
-        setLoading(false);
-      }, 1500);
+      console.error('Supabase is not configured.');
+      setLoading(false);
       return;
     }
 
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       if (session?.user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .single();
+        const { data: profile } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
         if (profile) {
           useAuthStore.getState().setProfile(profile);
         }
@@ -45,11 +40,7 @@ export function AppNavigator() {
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
       if (session?.user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .single();
+        const { data: profile } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
         if (profile) {
           useAuthStore.getState().setProfile(profile);
         }
@@ -68,7 +59,6 @@ export function AppNavigator() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
         {!session ? (
           <>
             <Route path="/" element={<WelcomeScreen />} />
@@ -77,12 +67,12 @@ export function AppNavigator() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         ) : (
-          /* Protected Routes */
           <>
             <Route path="/onboarding" element={<OnboardingScreen />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/exercises" element={<AdminExercisesScreen />} />
-            {/* Add more admin routes here later */}
+            <Route path="/admin" element={profile?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/" replace />} />
+            <Route path="/admin/exercises" element={profile?.role === 'admin' ? <AdminExercisesScreen /> : <Navigate to="/" replace />} />
+            <Route path="/admin/contests" element={profile?.role === 'admin' ? <AdminContestsScreen /> : <Navigate to="/" replace />} />
+            <Route path="/admin/users" element={profile?.role === 'admin' ? <AdminUsersScreen /> : <Navigate to="/" replace />} />
             <Route path="/*" element={<MainTabs />} />
           </>
         )}

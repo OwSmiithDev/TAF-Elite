@@ -159,12 +159,12 @@ begin
   set
     role = 'admin',
     updated_at = now()
-  where lower(email) = lower('marcosapps2020@gmail.com');
+  where lower(email) = lower('SEU-EMAIL-ADMIN');
 
   select id
   into owner_profile_id
   from public.profiles
-  where lower(email) = lower('marcosapps2020@gmail.com')
+  where lower(email) = lower('SEU-EMAIL-ADMIN')
   limit 1;
 
   if owner_profile_id is not null then
